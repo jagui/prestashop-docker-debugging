@@ -1,0 +1,40 @@
+version: '3.3'
+services:
+  db:
+    image: mariadb
+    container_name: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=prestashop
+      - MYSQL_DATABASE=prestashop
+      - MYSQL_USER=prestashop
+      - MYSQL_PASSWORD=prestashop
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - pma_arbitrary=1
+      - pma_host=mariadb
+    depends_on:
+      - db
+    ports:
+      - 8080:80
+  prestashop-apache:
+    build: ./prestashop
+    image: prestashop-1.6
+    container_name: prestashop-1.6
+    environment:
+      - PS_DEMO_MODE=1
+      - DB_SERVER=mariadb
+      - DB_USER=prestashop
+      - DB_PASSWD=prestashop
+      - DB_NAME=prestashop
+      - PS_INSTALL_AUTO=1
+      - PS_DOMAIN=prestashop.local
+      - PS_FOLDER_ADMIN=admin_
+      - PS_FOLDER_INSTALL=install_
+    depends_on:
+      - phpmyadmin
+    volumes:
+      - ../fs:/var/www/html
+    ports:
+      - 80:80
