@@ -23,18 +23,19 @@ services:
     image: prestashop-1.6
     container_name: prestashop-1.6
     environment:
-      - PS_DEMO_MODE=1
+      - PS_DEMO_MODE=0
       - DB_SERVER=mariadb
       - DB_USER=prestashop
       - DB_PASSWD=prestashop
       - DB_NAME=prestashop
       - PS_INSTALL_AUTO=1
-      - PS_DOMAIN=prestashop.local
+      - PS_DOMAIN=someshop.com
       - PS_FOLDER_ADMIN=admin_
       - PS_FOLDER_INSTALL=install_
+      - TZ=Europe/Paris
     depends_on:
       - phpmyadmin
     volumes:
-      - ../fs:/var/www/html
+      - ../../fs:/var/www/html
     ports:
       - 80:80
