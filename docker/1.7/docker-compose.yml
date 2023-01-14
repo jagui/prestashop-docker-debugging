@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   db:
-    image: mariadb
+    image: mariadb:10.8.2
     container_name: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD=prestashop
